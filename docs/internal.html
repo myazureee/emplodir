@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internal</title>
+    <link rel="stylesheet" href="style2.css">
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="img/emplodir-logo-only-transparent.ico" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/session-info')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('username').innerText = data.username;
+                    } else {
+                        console.log('Ungültige Sitzung, Weiterleitung zur about.html');
+                        window.location.href = '/about.html'; // Redirect to about page if session is invalid
+                    }
+                })
+                .catch(error => {
+                    console.error('Fehler beim Abrufen der Sitzungsinformationen:', error);
+                    window.location.href = '/about.html'; // Redirect to about page on error
+                });
+        });
+
+        function logout() {
+            fetch('/logout')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = '/about.html';
+                    }
+                })
+                .catch(error => {
+                    console.error('Fehler beim Abmelden:', error);
+                });
+        }
+    </script>
+</head>
+<body>
+    <nav id="main-navbar">
+        <ul>
+            <li><a>Internal</a></li>
+            <li><a href="about.html">Public Page</a></li>
+            <li><a href="tools.html">Search</a></li>
+        </ul>
+    </nav>
+    <nav id="secondary-navbar">
+        <ul>
+        </ul>
+    </nav>
+    <nav id="tertiary-navbar">
+        <ul>
+            <li><a id="username">Noah</a></li>
+            <li><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+    </nav>
+    <div id="body-main">
+        <h1>SQL Testseite</h1>
+        
+        <form id="sqlForm">
+            <label for="sqlQuery">SQL Abfrage:</label>
+            <input type="text" id="sqlQuery" name="sqlQuery" required>
+            <button type="submit">Absenden</button>
+        </form>
+
+        <h2>Ergebnis:</h2>
+        <table id="resultTable" border="1">
+            <thead></thead>
+            <tbody></tbody>
+        </table>
+
+        <div class="charts-container">
+            <div class="chart-wrapper">
+                <h2>MySQL Performance Monitor</h2>
+                <canvas id="performanceChart"></canvas>
+            </div>
+            <div class="chart-wrapper">
+                <h2>RAM Auslastung</h2>
+                <canvas id="ramChart"></canvas>
+            </div>
+        </div>
+
+        <script>
+            document.getElementById('sqlForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const sqlQuery = document.getElementById('sqlQuery').value;
+                fetch('/query', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ query: sqlQuery })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Netzwerkantwort war nicht ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        displayResults(data.data);
+                    } else {
+                        document.getElementById('result').innerText = 'Fehler: ' + data.message;
+                    }
+                })
+                .catch(error => {
+                    console.error('Fehler:', error);
+                    document.getElementById('result').innerText = 'Fehler: ' + error.message;
+                });
+            });
+
+            function displayResults(data) {
+                const tableHead = document.getElementById('resultTable').getElementsByTagName('thead')[0];
+                const tableBody = document.getElementById('resultTable').getElementsByTagName('tbody')[0];
+                tableHead.innerHTML = ''; // Clear previous headers
+                tableBody.innerHTML = ''; // Clear previous results
+
+                if (data.length === 0) return;
+
+                // Create headers dynamically
+                const headers = Object.keys(data[0]);
+                const headerRow = tableHead.insertRow();
+                headers.forEach(header => {
+                    const th = document.createElement('th');
+                    th.textContent = header;
+                    headerRow.appendChild(th);
+                });
+
+                // Create rows dynamically
+                data.forEach(row => {
+                    const newRow = tableBody.insertRow();
+                    headers.forEach(header => {
+                        const newCell = newRow.insertCell();
+                        newCell.textContent = row[header];
+                    });
+                });
+            }
+
+            // Performance Monitor
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            const performanceChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Threads Connected',
+                        data: [],
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            function updatePerformanceData() {
+                fetch('/performance')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const now = new Date();
+                            const timeLabel = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+                            performanceChart.data.labels.push(timeLabel);
+                            performanceChart.data.datasets[0].data.push(data.data[0].Value);
+                            performanceChart.update();
+                        } else {
+                            console.error('Fehler beim Abrufen der Performance-Daten:', data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Fehler:', error);
+                    });
+            }
+
+            // RAM Usage Monitor
+            const ctxRAM = document.getElementById('ramChart').getContext('2d');
+            const ramChart = new Chart(ctxRAM, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'RAM Usage (%)',
+                        data: [],
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+
+            function updateRAMData() {
+                fetch('/ram-usage')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const now = new Date();
+                            const timeLabel = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+                            ramChart.data.labels.push(timeLabel);
+                            ramChart.data.datasets[0].data.push(data.data.usedMemoryPercentage.toFixed(2));
+                            ramChart.update();
+                        } else {
+                            console.error('Fehler beim Abrufen der RAM-Daten:', data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Fehler:', error);
+                    });
+            }
+
+            // Aktualisiere die Performance-Daten alle 5 Sekunden
+            setInterval(updatePerformanceData, 5000);
+            // Aktualisiere die RAM-Daten alle 5 Sekunden
+            setInterval(updateRAMData, 5000);
+        </script>
+    </div>
+</body>
+</html>

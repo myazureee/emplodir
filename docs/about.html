@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emplodir</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="img/emplodir-logo-only-transparent.ico" type="image/x-icon">
+    <script src="login.js" defer></script>
+</head>
+<body>
+    <nav id="main-navbar">
+        <ul>
+            <img src="img/emplodir-logo-only-transparent.png" width="66%">
+        </ul>
+    </nav>
+    <nav id="secondary-navbar">
+        <ul>
+            <li><a href="about.html">Home</a></li>
+            <li><a href="credentials.html">About</a></li>
+        </ul>
+    </nav>
+    <nav id="tertiary-navbar">
+        <ul>
+            <li><a href="#" id="loginBtn">Login</a></li>
+        </ul>
+    </nav>
+    <div class="me-content">
+        <h1>About Emplodir</h1>
+        <h3>What is Emplodir?</h3>
+        <table>
+            <tr>
+              <td>Emplodir ist ein Personalstamm, welcher als Mitarbeiterverzeichnis fungiert. In Emplodir sind verschiedene Parameter wie Name, Vorname, Geburtsdatum, Erster Arbeitstag und die Position in der Geschäftshierarchie ersichtlich.</td>
+            </tr>
+        </table>
+        <h3>How does it work?</h3>
+        <table>
+            <tr>
+              <td>Einfach mit dem Login-Knopf unten links einloggen und danach eine Abfrage tätigen.</td>
+            </tr>
+        </table>
+    </div>
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Login</h2>
+          <form id="loginForm">
+            <label for="username">Benutzername:</label>
+            <input type="text" id="username" required>
+            <label for="password">Passwort:</label>
+            <input type="password" id="password" required>
+            <button type="submit">Einloggen</button>
+          </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,157 @@
+html {
+    min-height: 100%;
+    background: linear-gradient(90deg, rgba(190,190,190,1) 12%, rgba(255,255,255,1) 18%);
+}
+
+body {
+    margin: 0;
+    font-family: 'Titillium Web', sans-serif;
+    color: black;
+}
+
+#main-navbar {
+    width: 16%;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0);
+    padding: 20px;
+    box-sizing: border-box;
+    position: fixed;    
+}
+
+#main-navbar::after {
+    content: '';
+    display: block;
+    width: calc(100% - 135px); /* Adjusted to the width of the navbar minus padding */
+    height: 4px; /* Thickness of the line */
+    background: black;
+    border-radius: 2px; /* Rounded edges */
+    position: absolute;
+    bottom: -4px; /* Positioning the line just below the navbar */
+    left: 20px; /* Align with the navbar's padding */
+}
+
+#main-navbar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#main-navbar ul li {
+    margin-bottom: 10px;
+}
+
+#main-navbar ul li a {
+    color: black;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    width: calc(16vw - 135px); 
+    box-sizing: border-box; /* Includes padding in the width */
+    transition: all 0.3s ease;
+    border-radius: 8px; /* Rounded corners */
+    background-color: transparent; /* Transparent background */
+}
+
+#main-navbar ul li a:hover {
+    box-shadow: 0 0 10px 0 gray;
+    cursor: pointer;
+    border-radius: 8px
+}
+
+#secondary-navbar {
+    width: 16%;
+    position: fixed;
+    left: 0;
+    top: 240px;
+    background-color: rgba(0, 0, 0, 0);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#secondary-navbar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#secondary-navbar ul li {
+    margin-bottom: 5px;
+}
+
+#secondary-navbar ul li a {
+    color: black;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    width: calc(16vw - 135px); /* Fixed width for buttons */
+    box-sizing: border-box; /* Includes padding in the width */
+    transition: all 0.3s ease;
+    border-radius: 8px; /* Rounded corners */
+    background-color: transparent; /* Transparent background */
+}
+
+#secondary-navbar ul li a:hover {
+    box-shadow: 0 0 10px 0 gray;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+#tertiary-navbar {
+    width: 16%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#tertiary-navbar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#tertiary-navbar ul li {
+    margin-bottom: 5px;
+}
+
+#tertiary-navbar ul li a {
+    color: black;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    width: calc(16vw - 135px); /* Fixed width for buttons */
+    box-sizing: border-box; /* Includes padding in the width */
+    transition: all 0.3s ease;
+    border-radius: 8px; /* Rounded corners */
+    background-color: transparent; /* Transparent background */
+}
+
+#tertiary-navbar ul li a:hover {
+    box-shadow: 0 0 10px 0 gray;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+#body-main {
+    margin-left: 20%; /* Adjust this value based on the actual height of your navbar */
+    padding: 20px;
+    color: black;
+}
+
+.charts-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px; /* Optional: fügt etwas Platz oben hinzu */
+}
+
+.chart-wrapper {
+    width: 45%;
+}
+
+canvas {
+    width: 100% !important;
+    height: auto !important;
+}
