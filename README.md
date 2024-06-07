@@ -1,10 +1,3 @@
-# Clipboard
-mein-webserver/
-├── index.html
-├── server.js
-└── package.json
-
-
 # Introduction
 This is one my recent school projects, where I realized a website which has a login function.
 After the Login window you will be redirected to a site which allows you to make SQL statements and show diffrent performance metrics in graphs.
