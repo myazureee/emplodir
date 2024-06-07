@@ -1,3 +1,10 @@
+# Clipboard
+mein-webserver/
+├── index.html
+├── server.js
+└── package.json
+
+
 # Introduction
 This is one my recent school projects, where I realized a website which has a login function.
 After the Login window you will be redirected to a site which allows you to make SQL statements and show diffrent performance metrics in graphs.
@@ -5,7 +12,7 @@ There are a few features this projects covers.
 
 - Login windows with the help of node.js (just JS)
 - No access without valid session to the "backend"
-- 
+- MySQL queries from frontend
 
 In the following part I will show how I did setup 'emplodir'.
 
@@ -95,4 +102,44 @@ FLUSH PRIVILEGES;
 
 ### MySQL Data
 You can choose whatever data you prefer. As a scheme I used the following provided.
-![ERD]()
+![ERD](ERD.png)
+
+## Setup Node.js
+I will show you how I did setup node.js on my Ubuntu server.
+
+1. Installing node.js and npm (Node Package Manager)
+```
+sudo apt update
+sudo apt install nodejs npm
+```
+
+2. Create a project directory
+```
+mkdir emplodir
+cd emplodir
+```
+
+3. Initializing of the Node.js project
+```
+npm init -y
+```
+
+4. Installation of the required packages
+```
+npm install express body-parser mysql
+```
+
+5. You can paste your html/css/js right in this directory (emplodir)
+```
+emplodir/
+├── about.html
+├── internal.html
+├── credentials.html
+├── style.css
+├── style2.css
+├── server.js
+├── login.js
+├── script.js
+└── package.json
+
+```
