@@ -95,3 +95,4 @@ FLUSH PRIVILEGES;
 
 ### MySQL Data
 You can choose whatever data you prefer. As a scheme I used the following provided.
+![ERD]()
