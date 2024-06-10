@@ -45,6 +45,10 @@ sudo apt install mysql-server
 ```
 sudo systemctl start mysql.service
 ```
+> [!WARNING]
+> Warning: As of July 2022, an error will occur when you run the mysql_secure_installation script without some further configuration. The reason is that this script will attempt to set a password for the installation’s root MySQL account but, by default on Ubuntu installations, this account is not configured to connect using a password.
+> 
+> Source: digitalocean.com [^1]
 
 4. Now MySQL is installed. Before we can use MySQL we have to make some necessary changes for it to work flawlessly. First, Open up MySQL
 ```
@@ -136,3 +140,8 @@ emplodir/
 └── package.json
 
 ```
+
+[^1]: https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-22-04
+
+# Understanding
+## about.html
