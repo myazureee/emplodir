@@ -36,7 +36,7 @@ app.use(session({
 const db = mysql.createConnection({
     host: '127.0.0.1', // oder die IP-Adresse deines MySQL-Servers
     user: 'emplodir',
-    password: 'Sml12345-',
+    password: 'YourSecurePassword',
     database: 'emplodir'
 });
 
