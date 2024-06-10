@@ -46,7 +46,7 @@ sudo apt install mysql-server
 sudo systemctl start mysql.service
 ```
 
-4. Now MySQL ist installed. Before we can use MySQL we have to make some necessary changes for it to work flawlessly. First, Open up MySQL
+4. Now MySQL is installed. Before we can use MySQL we have to make some necessary changes for it to work flawlessly. First, Open up MySQL
 ```
 sudo mysql
 ```
